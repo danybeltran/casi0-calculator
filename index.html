@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0,user-scalable=0"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Casi0 calculator</title>
+  </head>
+  <body>
+    <style>
+      body,
+      html,
+      * {
+        font-family: sans-serif;
+      }
+      .calc {
+        border-radius: 20px 20px 10px 10px;
+        background-color: rgb(33, 33, 54);
+        padding: 10px;
+        width: 250px;
+        border: 1px solid lightgray;
+      }
+      .calc .logo{
+        padding: 0px 10px;
+        color: white;
+        font-size: 20px;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+      }
+      .calc .textfield .field {
+        color: rgb(49, 49, 49);
+        background-color: rgb(102, 110, 107);
+        font-family: "Orbitron", sans-serif;
+        font-size: 24px;
+        padding: 5px;
+        margin-left: 3px;
+        border-radius: 5px;
+        margin-bottom:7px;
+        outline: none;
+        width: 245px;
+        box-sizing: border-box;
+        border: 1px solid lightgray;
+      }
+
+      .calc .buttons .calc-button {
+        font-family: 'Source Code Pro', monospace;
+        color: white;
+        background-color: rgb(31, 31, 31);
+        transition: 100ms;
+        border-radius: 10px;
+        outline: none;
+        border: 1px solid rgb(108, 108, 108);
+        font-size: 28px;
+        padding: 5px 12px;
+        margin: 4px;
+        width: 50px;
+      }
+      .calc .buttons .calc-button:active {
+        border: 1px solid rgb(32, 32, 32);
+        background-color: rgb(177, 177, 177);
+        color: rgb(48, 48, 48);
+      }
+      /* button color variation */
+      .calc .buttons .calc-button.colored * {
+        color: white;
+      }
+      .calc .buttons .calc-button.colored.red {
+        background-color: rgb(175, 67, 67);
+        color: white;
+      }
+    </style>
+    <script type="text/javascript">
+      function playPop() {
+        document.getElementById("pop").play();
+      }
+      var result = "0";
+      function addText(texts) {
+        playPop();
+        var tn = document.getElementById("input-field");
+        var text = String(texts);
+        if (text.match(/[0-9]/)) {
+          tn.value = tn.value + String(text);
+          result = result.concat(text);
+        } else {
+          switch (text) {
+            // symbols
+            case "+":
+              tn.value = tn.value + "+";
+              result = result.concat("+");
+              break;
+            case "-":
+              tn.value = tn.value + text;
+              result = result.concat("-");
+              break;
+            case "X":
+              tn.value = tn.value + "*";
+              result = result.concat("*");
+              break;
+            case "÷":
+              tn.value = tn.value + "÷";
+              result = result.concat("/");
+              break;
+            case "(":
+              tn.value = tn.value + text;
+              result = result.concat(text);
+              break;
+            case ")":
+              tn.value = tn.value + text;
+              result = result.concat(text);
+              break;
+            case "√":
+              tn.value = tn.value + "√(";
+              result = result.concat("Math.sqrt(");
+              break;
+            case "π":
+              tn.value = tn.value + "π";
+              result = result.concat("Math.PI");
+              break;
+            default:
+              tn.value = tn.value;
+          }
+        }
+      }
+
+      function reset() {
+        playPop();
+        result = "";
+        document.getElementById("input-field").value = "";
+      }
+      function results() {
+        try {
+          document.getElementById("input-field").value = eval(result);
+        } catch (err) {
+          document.getElementById("input-field").value = "Err";
+        } finally {
+          playPop();
+        }
+      }
+    </script>
+    <audio src="./pop.mp3" id="pop" hidden></audio>
+    <div class="calc">
+      <p class="logo"><b>CASIO &reg;</b></p>
+      <div class="textfield">
+        <input
+          class="field"
+          id="input-field"
+          readonly
+          type="text"
+        />
+      </div>
+      <div class="buttons">
+        <button class="calc-button" onclick="addText(7)">7</button>
+        <button class="calc-button" onclick="addText(8)">8</button>
+        <button class="calc-button" onclick="addText(9)">9</button>
+        <button class="calc-button colored red" onclick="reset()">
+          C
+        </button>
+      </div>
+      <div class="buttons">
+        <button class="calc-button" onclick="addText(4)">4</button>
+        <button class="calc-button" onclick="addText(5)">5</button>
+        <button class="calc-button" onclick="addText(6)">6</button>
+        <button class="calc-button" onclick='addText("+")'>+</button>
+      </div>
+      <div class="buttons">
+        <button class="calc-button" onclick="addText(1)">1</button>
+        <button class="calc-button" onclick="addText(2)">2</button>
+        <button class="calc-button" onclick="addText(3)">3</button>
+        <button class="calc-button" onclick='addText("-")'>-</button>
+      </div>
+      <div class="buttons">
+        <button class="calc-button" onclick="addText(0)">0</button>
+        <button class="calc-button" onclick='addText("(")'>(</button>
+        <button class="calc-button" onclick='addText(")")'>)</button>
+        <button class="calc-button" onclick='addText("X")'>X</button>
+      </div>
+      <div class="buttons">
+        <button class="calc-button" onclick='addText("√")'>√</button>
+        <button class="calc-button" onclick='addText("π")'>π</button>
+        <button class="calc-button" onclick="results()">=</button>
+        <button class="calc-button" onclick='addText("÷")'>÷</button>
+      </div>
+    </div>
+  </body>
+</html>
